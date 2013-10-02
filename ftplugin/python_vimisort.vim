@@ -1,5 +1,5 @@
 " This will be called by the isort command
-function! vim_isort#sort_imports()
+function! s:Isort()
 python << endofpython
 import vim
 from isort import SortImports
@@ -10,4 +10,4 @@ vim.current.buffer[:] = new_contents.split('\n')
 endofpython
 endfunction
 
-command! isort call vim_isort#sort_imports()
+command! Isort call s:Isort()
