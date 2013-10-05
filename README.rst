@@ -15,17 +15,10 @@ You can also configure isort options, check them on the `isort docs <https://git
 Installation
 ============
 
-* Install the isort dependency:
-
-.. code:: bash
-    
-    sudo pip install isort
-
 * Add the plugin to vim using `Vundle <https://github.com/gmarik/vundle>`_ or any other plugin manager, pointing to this repo:
 
 .. code::
 
-    Bundle 'fisadev/vim-isort'
+    Bundle 'admk/vim-isort'
 
 (Or if you don't use any plugin manager, you can just copy the ``python_vimisort.vim`` file to your ``.vim/ftplugin`` folder)
-
