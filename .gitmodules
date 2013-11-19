@@ -1,0 +1,9 @@
+[submodule "python/isort"]
+	path = python/isort
+	url = https://github.com/timothycrosley/isort.git
+[submodule "python/pies"]
+	path = python/pies
+	url = https://github.com/timothycrosley/pies.git
+[submodule "python/natsort"]
+	path = python/natsort
+	url = https://github.com/SethMMorton/natsort.git

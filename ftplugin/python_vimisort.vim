@@ -10,7 +10,14 @@ endif
 
 python <<EOF
 import vim
-from isort import SortImports
+try:
+    from isort import SortImports
+except ImportError:
+    import sys
+    for p in ['isort', 'pies', 'natsort']:
+        sys.path.append(
+            vim.eval('expand("<sfile>:h:h") . "/python/{0}"'.format(p)))
+    from isort import SortImports
 
 def isort(text_range):
     old_contents = u'\n'.join(x.decode('utf-8') for x in text_range[:])
