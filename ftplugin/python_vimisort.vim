@@ -1,5 +1,12 @@
 command! Isort exec("py isort()")
-autocmd FileType python vnoremap <C-i> :python isort_visual(vim.current.range)<CR>
+
+if !exists('g:vim_isort_map')
+    let g:vim_isort_map = '<C-i>'
+endif
+
+if g:vim_isort_map != ''
+    execute "vnoremap <buffer>" g:vim_isort_map  ":py isort_visual(vim.current.range)<CR>"
+endif
 
 python <<EOF
 import vim
