@@ -1,25 +1,26 @@
-command! Isort exec("py isort()")
+command! Isort exec("py isort_file()")
 
 if !exists('g:vim_isort_map')
     let g:vim_isort_map = '<C-i>'
 endif
 
 if g:vim_isort_map != ''
-    execute "vnoremap <buffer>" g:vim_isort_map  ":py isort_visual(vim.current.range)<CR>"
+    execute "vnoremap <buffer>" g:vim_isort_map  ":py isort_visual()<CR>"
 endif
 
 python <<EOF
 import vim
 from isort import SortImports
 
-def isort():
-    old_contents = u'\n'.join(x.decode('utf-8') for x in vim.current.buffer[:])
+def isort(text_range):
+    old_contents = u'\n'.join(x.decode('utf-8') for x in text_range[:])
     new_contents = SortImports(file_contents=old_contents).output
-    vim.current.buffer[:] = new_contents.encode('utf-8').split('\n')
+    text_range[:] = new_contents.encode('utf-8').split('\n')
 
-def isort_visual(current_range):
-    old_contents = u'\n'.join(x.decode('utf-8') for x in current_range)
-    new_contents = SortImports(file_contents=old_contents).output
-    vim.current.range[:] = new_contents.encode('utf-8').split('\n')
+def isort_file():
+    isort(vim.current.buffer)
+
+def isort_visual():
+    isort(vim.current.range)
 
 EOF
