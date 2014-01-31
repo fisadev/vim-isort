@@ -8,8 +8,6 @@ elseif has('python3')
     command! -nargs=1 AvailablePython python3 <args>
     let s:available_short_python = ':py3'
     let s:python_present = 1
-else
-    command! -nargs=1 AvailablePython
 endif
 
 if s:python_present
