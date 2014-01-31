@@ -41,7 +41,7 @@ def isort(text_range):
     new_lines = new_text.split('\n')
 
     # remove new line added because of the split('\n')
-    if not new_lines[-1].strip():
+    if not new_lines[-1].strip() and len(text_range) < len(new_lines):
         del new_lines[-1]
 
     text_range[:] = new_lines
