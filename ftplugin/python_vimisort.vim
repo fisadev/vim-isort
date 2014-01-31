@@ -1,14 +1,22 @@
 command! Isort exec("py isort_file()")
 
+if has('python')
+    command! -nargs=1 AvailablePython python <args>
+elseif has('python3')
+    command! -nargs=1 AvailablePython python3 <args>
+else
+    echo "No python interpreter available, vim-isort won't work"
+endif
+
 if !exists('g:vim_isort_map')
     let g:vim_isort_map = '<C-i>'
 endif
 
-if g:vim_isort_map != ''
-    execute "vnoremap <buffer>" g:vim_isort_map  ":py isort_visual()<CR>"
+if g:vim_isort_map != '' && has('AvailablePython')
+    execute "vnoremap <buffer>" g:vim_isort_map  ":AvailablePython isort_visual()<CR>"
 endif
 
-python <<EOF
+AvailablePython <<EOF
 import vim
 from sys import version_info
 from isort import SortImports
