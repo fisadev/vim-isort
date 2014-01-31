@@ -17,6 +17,10 @@ def isort(text_range):
     new_contents = SortImports(file_contents=old_contents).output
     text_range[:] = new_contents.encode('utf-8').split('\n')
 
+    # remove new line added because of the split('\n')
+    if not text_range[-1].strip():
+        del text_range[-1]
+
 def isort_file():
     isort(vim.current.buffer)
 
