@@ -8,7 +8,12 @@ else
     throw 'No python support present, vim-isort will be disabled'
 endif
 
-command! Isort exec("AvailablePython isort_file()")
+
+fun! ISort(start, end)
+    exe "AvailablePython isort(vim.current.buffer.range(".a:start.",".a:end."))"
+endfun
+command! -range=% Isort keepjumps call ISort(<line1>,<line2>)
+
 
 if !exists('g:vim_isort_map')
     let g:vim_isort_map = '<C-i>'
@@ -17,6 +22,7 @@ endif
 if g:vim_isort_map != ''
     execute "vnoremap <buffer>" g:vim_isort_map s:available_short_python "isort_visual()<CR>"
 endif
+
 
 AvailablePython <<EOF
 import vim
