@@ -26,7 +26,7 @@ from isort import SortImports
 # in python2, the vim module uses utf-8 encoded strings
 # in python3, it uses unicodes
 # so we have to do different things in each case
-using_bytes = version_info.major == 2
+using_bytes = version_info[0] == 2
 
 def isort(text_range):
     old_text = '\n'.join(text_range)
