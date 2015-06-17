@@ -26,7 +26,7 @@ Installation
 
 .. code::
 
-    Bundle 'fisadev/vim-isort'
+    Plugin 'fisadev/vim-isort'
 
 (Or if you don't use any plugin manager, you can just copy the ``python_vimisort.vim`` file to your ``.vim/ftplugin`` folder)
 
