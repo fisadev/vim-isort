@@ -19,9 +19,16 @@ if g:vim_isort_map != ''
 endif
 
 AvailablePython <<EOF
+from __future__ import print_function
 import vim
 from sys import version_info
-from isort import SortImports
+
+try:
+    from isort import SortImports
+    isort_imported = True
+except ImportError:
+    isort_imported = False
+
 
 # in python2, the vim module uses utf-8 encoded strings
 # in python3, it uses unicodes
@@ -29,6 +36,10 @@ from isort import SortImports
 using_bytes = version_info[0] == 2
 
 def isort(text_range):
+    if not isort_imported:
+        print("No isort python module detected, you should install it. More info at https://github.com/fisadev/vim-isort")
+        return
+
     old_text = '\n'.join(text_range)
     if using_bytes:
         old_text = old_text.decode('utf-8')
