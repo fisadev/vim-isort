@@ -35,10 +35,23 @@ except ImportError:
 # so we have to do different things in each case
 using_bytes = version_info[0] == 2
 
+
+def count_blank_lines_at_end(lines):
+    blank_lines = 0
+    for line in reversed(lines):
+        if line.strip():
+            break
+        else:
+            blank_lines += 1
+    return blank_lines
+
+
 def isort(text_range):
     if not isort_imported:
         print("No isort python module detected, you should install it. More info at https://github.com/fisadev/vim-isort")
         return
+
+    blank_lines_at_end = count_blank_lines_at_end(text_range)
 
     old_text = '\n'.join(text_range)
     if using_bytes:
@@ -51,8 +64,8 @@ def isort(text_range):
 
     new_lines = new_text.split('\n')
 
-    # remove new line added because of the split('\n')
-    if not new_lines[-1].strip() and len(text_range) < len(new_lines):
+    # remove empty lines wrongfully added
+    while new_lines and not new_lines[-1].strip() and blank_lines_at_end < count_blank_lines_at_end(new_lines):
         del new_lines[-1]
 
     text_range[:] = new_lines
