@@ -44,3 +44,9 @@ Or disable the mapping with this:
 .. code-block:: viml
 
     let g:vim_isort_map = ''
+
+You can also specify a particular Python version, so if `isort` is installed under Python 3:
+
+.. code-block:: viml
+
+    let g:vim_isort_python_version = 'python3'
