@@ -67,7 +67,15 @@ def isort(text_range):
     if using_bytes:
         old_text = old_text.decode('utf-8')
 
-    new_text = SortImports(file_contents=old_text).output
+    sorted_imports = SortImports(file_contents=old_text)
+
+    # In developement version there will be `.skipped` flag added:
+    # https://github.com/timothycrosley/isort/blob/develop/isort/isort.py?#L118
+    # But for now, we can just check for the `output` property.
+    if not getattr(sorted_imports, 'output', ''):
+        return
+
+    new_text = sorted_imports.output
 
     if using_bytes:
         new_text = new_text.encode('utf-8')
