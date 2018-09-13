@@ -68,8 +68,8 @@ def isort(text_range):
         old_text = old_text.decode('utf-8')
 
     new_text = SortImports(file_contents=old_text).output
-    
-    if new_text is None:
+
+    if new_text is None or old_text == new_text:
         return
 
     if using_bytes:
