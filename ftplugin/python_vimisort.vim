@@ -67,7 +67,7 @@ def isort(text_range):
 
     config_overrides = vim.eval('g:vim_isort_config_overrides')
     if not isinstance(config_overrides, dict):
-        print('g:vim_isort_config_overrides should be dict, found {}'.format(type(overrides)))
+        print('g:vim_isort_config_overrides should be dict, found {}'.format(type(config_overrides)))
         return
     # convert ints carried over from vim as strings
     config_overrides = {k: int(v) if isinstance(v, str) and v.isdigit() else v
