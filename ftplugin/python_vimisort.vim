@@ -28,6 +28,10 @@ if g:vim_isort_map != ''
     execute "vnoremap <buffer>" g:vim_isort_map s:available_short_python "isort_visual()<CR>"
 endif
 
+if !exists('g:vim_isort_config_overrides')
+    let g:vim_isort_config_overrides = {}
+endif
+
 AvailablePython <<EOF
 from __future__ import print_function
 import vim
@@ -61,14 +65,22 @@ def isort(text_range):
         print("No isort python module detected, you should install it. More info at https://github.com/fisadev/vim-isort")
         return
 
+    config_overrides = vim.eval('g:vim_isort_config_overrides')
+    if not isinstance(config_overrides, dict):
+        print('g:vim_isort_config_overrides should be dict, found {}'.format(type(overrides)))
+        return
+    # convert ints carried over from vim as strings
+    config_overrides = {k: int(v) if isinstance(v, str) and v.isdigit() else v
+                        for k, v in config_overrides.items()}
+
     blank_lines_at_end = count_blank_lines_at_end(text_range)
 
     old_text = '\n'.join(text_range)
     if using_bytes:
         old_text = old_text.decode('utf-8')
 
-    new_text = SortImports(file_contents=old_text).output
-    
+    new_text = SortImports(file_contents=old_text, **config_overrides).output
+
     if new_text is None:
         return
 
