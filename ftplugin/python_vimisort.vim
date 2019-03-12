@@ -81,7 +81,7 @@ def isort(text_range):
 
     new_text = SortImports(file_contents=old_text, **config_overrides).output
 
-    if new_text is None:
+    if new_text is None or old_text == new_text:
         return
 
     if using_bytes:
