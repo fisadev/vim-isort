@@ -75,6 +75,14 @@ def isort(text_range):
 
     blank_lines_at_end = count_blank_lines_at_end(text_range)
 
+    magic = '##ISORT-FROM-FUTURE##'
+    for idx in range(len(text_range[:30])):
+       val = text_range[idx]
+       if val.startswith('from __future__ import'):
+          val = magic + val
+          text_range[idx] = val
+          break
+
     old_text = '\n'.join(text_range)
     if using_bytes:
         old_text = old_text.decode('utf-8')
@@ -88,6 +96,10 @@ def isort(text_range):
         new_text = new_text.encode('utf-8')
 
     new_lines = new_text.split('\n')
+    for idx in range(len(new_lines[:30])):
+       val = new_lines[idx]
+       if val.startswith(magic):
+          new_lines[idx] = val.replace(magic, '', 1)
 
     # remove empty lines wrongfully added
     while new_lines and not new_lines[-1].strip() and blank_lines_at_end < count_blank_lines_at_end(new_lines):
