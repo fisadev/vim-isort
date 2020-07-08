@@ -34,14 +34,23 @@ endif
 
 AvailablePython <<EOF
 from __future__ import print_function
+import os
 import vim
 from sys import version_info
 
 try:
-    from isort import SortImports
+    # Try isort >= 5
+    from isort import code
+    from isort.settings import Config
     isort_imported = True
 except ImportError:
-    isort_imported = False
+    try:
+        # Try isort < 5
+        from isort import SortImports
+        code = None
+        isort_imported = True
+    except ImportError:
+        isort_imported = False
 
 
 # in python2, the vim module uses utf-8 encoded strings
@@ -79,7 +88,10 @@ def isort(text_range):
     if using_bytes:
         old_text = old_text.decode('utf-8')
 
-    new_text = SortImports(file_contents=old_text, **config_overrides).output
+    if code is not None:
+        new_text = code(old_text, config=Config(settings_path=os.getcwd()), **config_overrides)
+    else:
+        new_text = SortImports(file_contents=old_text, **config_overrides).output
 
     if new_text is None or old_text == new_text:
         return
