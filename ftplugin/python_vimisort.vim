@@ -89,7 +89,10 @@ def isort(text_range):
         old_text = old_text.decode('utf-8')
 
     if code is not None:
-        new_text = code(old_text, config=Config(settings_path=os.getcwd()), **config_overrides)
+        if config_overrides:
+            new_text = code(old_text, **config_overrides)
+        else:
+            new_text = code(old_text, config=Config(settings_path=os.getcwd()))
     else:
         new_text = SortImports(file_contents=old_text, **config_overrides).output
 
