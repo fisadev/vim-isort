@@ -1,1 +1,1 @@
-../ftplugin/python_vimisort.vim
+execute 'source' expand('<sfile>:p:h') . expand('/../ftplugin/python_vimisort.vim')
