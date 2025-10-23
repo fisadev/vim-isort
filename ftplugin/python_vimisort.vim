@@ -39,11 +39,11 @@ endif
 " Define external isort function if needed
 if exists('g:vim_isort_use_external_python') && g:vim_isort_use_external_python
     if !exists(':Isort')
-        command! Isort call s:IsortExternal()
+        command! Isort call s:IsortViaSystem()
     endif
 
-    if !exists('*s:IsortExternal')
-        function! s:IsortExternal()
+    if !exists('*s:IsortViaSystem')
+        function! s:IsortViaSystem()
             let l:file = expand('%:p')
             if empty(l:file)
                 echoerr 'No file to sort'
