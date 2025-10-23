@@ -57,3 +57,11 @@ You can also specify a particular Python version, so if `isort` is installed und
 .. code-block:: viml
 
     let g:vim_isort_python_version = 'python3'
+
+Or you can specify a full path to a Python executable (e.g., for a virtual environment):
+
+.. code-block:: viml
+
+    let g:vim_isort_python_version = '/home/user/.local/bin/python3'
+    " or
+    let g:vim_isort_python_version = '/home/user/myproject/.venv/bin/python'
